@@ -1,7 +1,7 @@
 export class FinalBattleScene extends Phaser.Scene {
     constructor() {
         super('FinalBattleScene');
-        this.playerHP = 120; // 플레이어 체력
+        this.playerHP = 150; // 플레이어 체력
         this.enemyHP = 800;  // 적 체력
         this.respawnCount = 0; // 적 부활 횟수
     }
