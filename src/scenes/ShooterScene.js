@@ -1,7 +1,7 @@
 export class ShooterScene extends Phaser.Scene {
     constructor() {
         super('ShooterScene');
-        this.playerHP = 150; // 플레이어 체력
+        this.playerHP = 130; // 플레이어 체력
         this.enemyHP = 800;  // 적 체력
     }
 
