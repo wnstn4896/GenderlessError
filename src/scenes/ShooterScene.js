@@ -1,7 +1,7 @@
 export class ShooterScene extends Phaser.Scene {
     constructor() {
         super('ShooterScene');
-        this.playerHP = 200; // 플레이어 체력
+        this.playerHP = 150; // 플레이어 체력
         this.enemyHP = 800;  // 적 체력
     }
 
@@ -172,7 +172,7 @@ export class ShooterScene extends Phaser.Scene {
         this.enemies.children.iterate((enemy) => {
             // 화면 내 무작위 위치로 텔레포트
             enemy.setPosition(
-                Phaser.Math.Between(550, 1000), // 무작위 X
+                Phaser.Math.Between(450, 1000), // 무작위 X
                 Phaser.Math.Between(55, 680)   // 무작위 Y
             );
 
