@@ -6,7 +6,7 @@ export class BootScene extends Phaser.Scene {
     preload() {
         const basePath = window.location.pathname.replace(/\/[^\/]*$/, '');
         this.load.image('title', `${basePath}/assets/images/title.png`);
-        this.load.image('digitalBackground', `${basePath}/assets/images/shootbackground.png`);
+        this.load.image('digitalBackground', `${basePath}/assets/images/Shoot2D-background.png`);
         this.load.image('digitalBackground_final', `${basePath}/assets/images/shootbackgrounFinal.png`);
         this.load.image('openion2_32bit', `${basePath}/assets/images/openion2_32bit.png`);
         this.load.image('openion_32bit', `${basePath}/assets/images/openion_32bit.png`);
