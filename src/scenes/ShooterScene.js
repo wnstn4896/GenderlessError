@@ -172,7 +172,7 @@ export class ShooterScene extends Phaser.Scene {
         this.enemies.children.iterate((enemy) => {
             // 화면 내 무작위 위치로 텔레포트
             enemy.setPosition(
-                Phaser.Math.Between(450, 1000), // 무작위 X
+                Phaser.Math.Between(450, 1100), // 무작위 X
                 Phaser.Math.Between(55, 680)   // 무작위 Y
             );
 
