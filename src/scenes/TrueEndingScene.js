@@ -388,7 +388,6 @@ export class TrueEndingScene extends Phaser.Scene {
     }
 
     onNextDialogue() {
-
         if (this.currentIndex === 9 || this.currentIndex === 10)
             this.cameras.main.flash(300, 255, 0, 0);
 
@@ -397,8 +396,6 @@ export class TrueEndingScene extends Phaser.Scene {
 
         if (this.currentIndex === 52 || this.currentIndex === 55)
             this.cameras.main.flash(2000, 70, 70, 70);
-
-        console.log(this.currentIndex);
 
         // 대사 출력 진행
         if (this.currentIndex < this.dialogues.length) {
@@ -413,6 +410,54 @@ export class TrueEndingScene extends Phaser.Scene {
     }
 
     endScene() {
-        window.location.reload();
-    }
+        // 기존 UI 비활성화
+        if (this.visualNovelModule) {
+            if (this.visualNovelModule.dialogueBox) this.visualNovelModule.dialogueBox.setVisible(false);
+            if (this.visualNovelModule.characterSprite) this.visualNovelModule.characterSprite.setVisible(false);
+            if (this.visualNovelModule.backgroundImage) this.visualNovelModule.backgroundImage.setVisible(false);
+            if (this.visualNovelModule.nextButton) this.visualNovelModule.nextButton.destroy();
+        }
+        this.children.removeAll();
+
+        // 엔딩 크레딧 텍스트
+        const credits = [
+            "게임 기획 및 제작: 신준수",
+            "캐릭터 디자인: ChatGPT 이미지 생성",
+            "배경 디자인: ChatGPT 이미지 생성",
+            "제작 일자: 2025. 02. 05.",
+            "",
+            "게임 클리어 축하드립니다.",
+            "",
+            "【젠더리스 에러】",
+            "THE END"
+        ];
+    
+        // 크레딧을 하나의 텍스트로 결합
+        const creditText = credits.join("\n");
+    
+        // 엔딩 크레딧 UI 생성 (화면 중앙, 화면 아래에서 시작)
+        this.creditsText = this.add.text(
+            this.cameras.main.centerX, 
+            this.cameras.main.height + 50, // 화면 하단에서 시작
+            creditText, 
+            {
+                fontSize: "24px",
+                fill: "#ffffff",
+                align: "center",
+                fontFamily: "Arial",
+            }
+        ).setOrigin(0.5);
+    
+        // 크레딧 애니메이션 (위로 스크롤)
+        this.tweens.add({
+            targets: this.creditsText,
+            y: -200,
+            duration: 10000, // 스크롤되는 시간
+            ease: "Linear",
+            onComplete: () => {
+                // 크레딧 끝난 후 
+                window.location.reload();
+            }
+        });
+    }    
 }
