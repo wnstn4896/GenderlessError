@@ -35,7 +35,7 @@ export class TitleScene extends Phaser.Scene {
         // 클릭 이벤트
         startText.removeAllListeners('pointerdown'); // 기존 리스너 제거
         startText.on('pointerdown', () => {
-            this.scene.start('HiddenBattleScene'); // 다음 Scene으로 전환
+            this.scene.start('PrologueScene'); // 다음 Scene으로 전환
         });
     }
 }
