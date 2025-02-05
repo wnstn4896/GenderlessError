@@ -158,14 +158,14 @@ export class HiddenBattleScene extends Phaser.Scene {
     // 탄막 모델 로드
     loadBulletModels() {
         const bulletFiles = {
-            "player": "3DBullet0.glb",
-            "special": "3DBullet1.glb",
-            "enemy": "3DBullet_Enemy.glb"
+            "player": "3DBulletZero.glb",
+            "special": "3DBulletOne.glb",
+            "enemy": "3DBulletEnemy.glb"
         };
         
         Object.keys(bulletFiles).forEach(key => {
-            const filePath = "./assets/images/" + bulletFiles[key]; // 경로 확인 후 수정
-            console.log("Loading model:", filePath); // 경로 출력해서 확인
+            const basePath = "/GenderlessError/assets/images/";
+            const filePath = basePath + bulletFiles[key];
         
             BABYLON.SceneLoader.ImportMesh(
                 null, "./assets/images/", bulletFiles[key], this.babylonScene,
