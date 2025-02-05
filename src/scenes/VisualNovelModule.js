@@ -3,6 +3,16 @@ export class VisualNovelModule {
         this.scene = scene;
         this.uiElements = {};
         this.choiceTexts = [];
+        this.skipTimer = null;
+        this.skipBlockedScenes = ["DefeatEndingScene", "TrueEndingScene"] || [];
+        this.skipBlockedIndexes = []; // 특정 인덱스에서 스킵 제한 (기본은 빈 배열)
+
+        // MidPartScene의 133번 이후 스킵 금지
+        if (scene.scene.key === 'MidPartScene') {
+            for (let i = 133; i <= 1000; i++) { // 133번부터 스킵 제한
+                this.skipBlockedIndexes.push(i);
+            }
+        }
     }
 
     createUI() {
@@ -111,29 +121,63 @@ export class VisualNovelModule {
         });
     
         // 스킵 버튼 조건 설정
-        if (this.DefeatLog) {
+        const sceneKey = this.scene.scene.key;
+        const currentIndex = this.scene.currentIndex || 0; // 현재 대화 인덱스
+
+        if (
+            this.DefeatLog &&
+            !this.skipBlockedScenes.includes(sceneKey) &&
+            !this.skipBlockedIndexes.includes(currentIndex)
+        ) {
             skipButton.setVisible(true);
             skipButton.off('pointerdown').on('pointerdown', () => {
                 this.startSkipping(onNext);
             });
         } else {
             skipButton.setVisible(false);
+
+            // 제한된 씬이라면 스킵 중지
+            if (this.skipTimer) {
+                clearInterval(this.skipTimer);
+                this.skipTimer = null;
+            }
         }
     }    
     
     startSkipping(onNext) {
-        const skipInterval = 100; // 스킵 딜레이
-        const { skipButton } = this.uiElements;
+        if (this.skipTimer) {
+            // 이미 스킵 중이면 중지
+            clearInterval(this.skipTimer);
+            this.skipTimer = null;
+            return;
+        }
     
+        const skipInterval = 100;
         this.skipTimer = setInterval(() => {
-            // 현재 씬이 활성 상태인지 확인
+            const currentIndex = this.scene.currentIndex || 0;
+            const sceneKey = this.scene.scene.key;
+    
+            // 스킵 불가능한 씬이나 인덱스면 중단
+            if (this.skipBlockedScenes.includes(sceneKey) || this.skipBlockedIndexes.includes(currentIndex)) {
+                clearInterval(this.skipTimer);
+                this.skipTimer = null;
+                return;
+            }
+    
+            // 마지막 대사라면 스킵 중단
+            if (currentIndex >= this.scene.dialogues.length - 2) {
+                this.uiElements.skipButton.setVisible(false);
+                clearInterval(this.skipTimer);
+                this.skipTimer = null;
+                return;
+            }
+    
             if (!this.scene.sys.isActive()) {
                 clearInterval(this.skipTimer);
                 this.skipTimer = null;
                 return;
             }
     
-            // 현재 대화가 선택지를 포함하면 스킵 중단
             if (this.currentDialogue && this.currentDialogue.choices) {
                 clearInterval(this.skipTimer);
                 this.skipTimer = null;
@@ -142,13 +186,8 @@ export class VisualNovelModule {
                 onNext();
             }
         }, skipInterval);
-    
-        // 스킵 중 스킵 버튼을 다시 누르면 중지
-        skipButton.once('pointerdown', () => {
-            clearInterval(this.skipTimer);
-            this.skipTimer = null;
-        });
     }
+    
 
     showChoices(choices, onNext) {
         const { scene } = this;
