@@ -68,7 +68,7 @@ export class HiddenBattleScene extends Phaser.Scene {
 
     initBabylonScene(canvas) {
         this.engine = new BABYLON.Engine(canvas, true);
-        this.babylonScene = new BABYLON.Scene(this.engine); // ✅ 씬 저장
+        this.babylonScene = new BABYLON.Scene(this.engine); //  씬 저장
     
         // 조명 추가
         const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this.babylonScene);
@@ -76,7 +76,7 @@ export class HiddenBattleScene extends Phaser.Scene {
     
         // 카메라 고정
         this.camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 10, -20), this.babylonScene);
-        this.camera.setTarget(new BABYLON.Vector3(0, 0, 0)); // ✅ 올바른 씬 적용
+        this.camera.setTarget(new BABYLON.Vector3(0, 0, 0)); //  올바른 씬 적용
         this.camera.attachControl(canvas, true);
         this.babylonScene.clearColor = new BABYLON.Color3.Black();
     
@@ -119,7 +119,7 @@ export class HiddenBattleScene extends Phaser.Scene {
     
         // Babylon.js 엔진 루프
         this.engine.runRenderLoop(() => {
-            if (!this.babylonScene) return; // ✅ 씬이 삭제되면 중지
+            if (!this.babylonScene) return; // 씬이 삭제되면 중지
             this.updatePlayerMovement();
             this.updateBullets();
             this.updateBossBullets();
