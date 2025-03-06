@@ -115,7 +115,7 @@ export class FinalBattleScene extends Phaser.Scene {
 
         // 특수 탄막 자동 발사
         this.time.addEvent({
-            delay: 8000,
+            delay: 6500,
             callback: this.shootAutoBullet,
             callbackScope: this,
             loop: true,
