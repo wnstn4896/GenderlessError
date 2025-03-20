@@ -46,19 +46,6 @@ export class TitleScene extends Phaser.Scene {
                 color: '#ffffff',
                 fontFamily: 'Arial',
             }).setOrigin(0.5, 0.5).setInteractive(); // 중심 기준으로 정렬 및 상호작용 활성화
-    
-             // 호버 효과
-            continueText.on('pointerover', () => {
-                buttonBackground.fillStyle(0xffffff, 1); // 배경 흰색
-                buttonBackground.fillRoundedRect(530, 370, 140, 60, 10); // 다시 그리기
-                startText.setStyle({ color: '#000000' }); // 텍스트 검정색
-            });
-    
-            continueText.on('pointerout', () => {
-                buttonBackground.fillStyle(0x000000, 0.7); // 배경 반투명 검정
-                buttonBackground.fillRoundedRect(530, 370, 140, 60, 10); // 다시 그리기
-                startText.setStyle({ color: '#ffffff' }); // 텍스트 흰색
-            });
 
             // 클릭 이벤트
             continueText.removeAllListeners('pointerdown'); // 기존 리스너 제거
