@@ -59,6 +59,12 @@ export class TitleScene extends Phaser.Scene {
                 buttonBackground.fillRoundedRect(530, 370, 140, 60, 10); // 다시 그리기
                 startText.setStyle({ color: '#ffffff' }); // 텍스트 흰색
             });
+
+            // 클릭 이벤트
+            continueText.removeAllListeners('pointerdown'); // 기존 리스너 제거
+            continueText.on('pointerdown', () => {
+                this.scene.start('MidPartScene'); // 중반부 분기점 씬으로 전환
+            });
         }
     }
 }
