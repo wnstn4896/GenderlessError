@@ -1,6 +1,7 @@
 export class TitleScene extends Phaser.Scene {
     constructor() {
         super({ key: 'TitleScene' });
+        this.DefeatLog = sessionStorage.getItem("DefeatLog") === "true";
     }
 
     create() {
@@ -37,5 +38,27 @@ export class TitleScene extends Phaser.Scene {
         startText.on('pointerdown', () => {
             this.scene.start('PrologueScene'); // 다음 Scene으로 전환
         });
+        
+        if (this.DefeatLog){
+            // "이어하기" 버튼 텍스트
+            const continueText = this.add.text(600, 500, '이어하기', {
+                fontSize: '28px', // 텍스트 크기
+                color: '#ffffff',
+                fontFamily: 'Arial',
+            }).setOrigin(0.5, 0.5).setInteractive(); // 중심 기준으로 정렬 및 상호작용 활성화
+    
+             // 호버 효과
+            continueText.on('pointerover', () => {
+                buttonBackground.fillStyle(0xffffff, 1); // 배경 흰색
+                buttonBackground.fillRoundedRect(530, 370, 140, 60, 10); // 다시 그리기
+                startText.setStyle({ color: '#000000' }); // 텍스트 검정색
+            });
+    
+            continueText.on('pointerout', () => {
+                buttonBackground.fillStyle(0x000000, 0.7); // 배경 반투명 검정
+                buttonBackground.fillRoundedRect(530, 370, 140, 60, 10); // 다시 그리기
+                startText.setStyle({ color: '#ffffff' }); // 텍스트 흰색
+            });
+        }
     }
 }
