@@ -16,18 +16,18 @@ export class ShooterScene extends Phaser.Scene {
         this.player.setScale(0.09);
 
         // 피탄 판정 히트박스 생성
-        this.playerHitbox = this.add.circle(this.player.x, this.player.y, 5, 0xffffff); // 반경 5px
-        this.physics.add.existing(this.playerHitbox, false); // 물리 엔진에 추가 (false = 정적)
+        this.playerHitbox = this.add.circle(this.player.x, this.player.y, 5, 0xffffff); 
+        this.physics.add.existing(this.playerHitbox, false);
 
         // 히트박스 테두리 생성
         this.playerHitboxBorder = this.add.graphics();
-        this.playerHitboxBorder.lineStyle(2, 0xffffff); // 테두리 두께 2, 흰색
-        this.playerHitboxBorder.strokeCircle(this.player.x, this.player.y, 5); // 반경 5px
+        this.playerHitboxBorder.lineStyle(1, 0xffffff);
+        this.playerHitboxBorder.strokeCircle(this.player.x, this.player.y, 5);
 
         // 히트박스와 테두리 동기화
         this.physics.world.on('worldstep', () => {
             this.playerHitboxBorder.clear();
-            this.playerHitboxBorder.lineStyle(2, 0xff0000);
+            this.playerHitboxBorder.lineStyle(1, 0xff0000);
             this.playerHitboxBorder.strokeCircle(this.playerHitbox.x, this.playerHitbox.y, 5);
         });
 
@@ -319,4 +319,5 @@ export class ShooterScene extends Phaser.Scene {
             if (enemy.y <= 0 || enemy.y >= 690) enemy.setVelocityY(-enemy.body.velocity.y);
         });
     }
+
 }
